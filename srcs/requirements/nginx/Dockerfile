@@ -16,16 +16,17 @@ RUN apk add openssl
 RUN mkdir /etc/nginx/ssl
 # create the directory for the ssl certificate
 
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt -subj "/C=FR/ST=Paris/L=Paris/O=42/OU=42/CN=ft_services"
+RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=yel-hadr.42.fr/UID=yel-hadr"
 
-COPY ./conf/myNginx.conf /etc/nginx/conf.d/default.conf
+COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 # copy the configuration file for nginx
 
 COPY ./conf/index.html /var/www/html/index.html
 # copy the index.html file
 
-EXPOSE 8080
+EXPOSE 443
 # expose the port 8080 for the nginx server
+
 
 CMD ["nginx", "-g", "daemon off;"]
 # start the nginx server
