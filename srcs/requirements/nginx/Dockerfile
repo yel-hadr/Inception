@@ -1,22 +1,20 @@
-FROM alpine:3.12
+# Use the penultimate stable version of Alpine
+FROM alpine:3.14
 
-RUN apk update && apk add nginx
-# update the package list and install nginx
+# Install NGINX
+RUN apk --no-cache add nginx && \
+    apk --no-cache add openssl && \
+    rm -rf /etc/nginx/conf.d/* && \
+    mkdir -p /run/nginx && chown -R nginx:nginx /run/nginx && \
+    mkdir -p /etc/nginx/sites-available && \
+    mkdir -p /run/nginx && \
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=MO/L=MED/O=1337/OU=student/CN=yel-hadr.42.ma"
 
-RUN apk add openssl
-# install openssl to generate the ssl certificate
-RUN mkdir -p /run/nginx && chown -R nginx:nginx /run/nginx 
+# Copy custom NGINX configuration
+COPY /conf/nginx.conf /etc/nginx/nginx.conf
 
-# Create the sites-available directory
-RUN mkdir -p /etc/nginx/sites-available
+# Expose port 443 for HTTPS
+EXPOSE 443
 
-# Create the PID file directory
-RUN mkdir -p /run/nginx
-
-COPY conf/execute.sh /
-# copy the script that will start the nginx server
-
-RUN chmod +x /execute.sh
-# give the script the right permissions
-
-CMD ["sh", "/execute.sh"]
+# Set NGINX to run in the foreground
+CMD ["nginx", "-g", "daemon off;"]
