@@ -8,7 +8,7 @@ RUN apk --no-cache add nginx && \
     mkdir -p /run/nginx && chown -R nginx:nginx /run/nginx && \
     mkdir -p /etc/nginx/sites-available && \
     mkdir -p /run/nginx && \
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=MO/L=MED/O=1337/OU=student/CN=yel-hadr.42.ma"
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=MO/L=MED/O=1337/OU=student/CN=yel-hadr.42.fr"
 
 # Copy custom NGINX configuration
 COPY /conf/nginx.conf /etc/nginx/nginx.conf
