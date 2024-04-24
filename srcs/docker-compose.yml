@@ -1,5 +1,6 @@
 version: '3.8'
 
+
 services:
   nginx:
     container_name: nginx
@@ -20,15 +21,20 @@ services:
 
   mariadb:
     container_name: mariadb
+    env_file:
+      - .env
     networks:
       - inception
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
-    env_file:
-      - .env
     volumes:
       - mariadb:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: on-failure
     expose:
       - "3306"
@@ -37,7 +43,6 @@ services:
     container_name: wordpress
     env_file:
       - .env
-
     networks:
       - inception
     depends_on:
@@ -45,6 +50,8 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
+    volumes:
+      - wordpress:/var/www/wordpress
     restart: on-failure
     expose:
       - "9000"
@@ -55,13 +62,13 @@ volumes:
     driver_opts:
       type: none
       o: 'bind'
-      device: /home/youssef/mariadb
+      device: /home/yel-hadr/mariadb
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: 'bind'
-      device: /home/youssef/wordpress
+      device: /home/yel-hadr/wordpress
 
 networks:
   inception:
