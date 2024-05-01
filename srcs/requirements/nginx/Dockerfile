@@ -12,11 +12,9 @@ RUN apk --no-cache add nginx && \
 
 RUN mkdir -p /var/www/wordpress && \
 	chmod 777 /var/www/wordpress
-# Copy custom NGINX configuration
-COPY /conf/nginx.conf /etc/nginx/nginx.conf
-COPY index.html /var/www/wordpress/
-# Expose port 443 for HTTPS
-EXPOSE 443
 
-# Set NGINX to run in the foreground
+COPY /conf/nginx.conf /etc/nginx/nginx.conf
+HEALTHCHECK --start-period=10s --timeout=10s --interval=10s --retries=3 CMD ["pidof", "nginx"]
+
+
 CMD ["nginx", "-g", "daemon off;"]

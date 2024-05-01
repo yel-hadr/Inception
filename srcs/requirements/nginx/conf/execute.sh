@@ -27,3 +27,4 @@ echo '
         }
 } ' >>  /etc/nginx/sites-available/default
 
+exec "$@"

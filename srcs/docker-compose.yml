@@ -30,11 +30,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - mariadb:/var/lib/mysql
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
     restart: on-failure
     expose:
       - "3306"
@@ -47,6 +42,8 @@ services:
       - inception
     depends_on:
       - mariadb
+      - redis
+      - ftp-server
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
@@ -56,19 +53,90 @@ services:
     expose:
       - "9000"
 
+  redis:
+    container_name: redis
+    networks:
+      - inception
+    build:
+      context: ./requirements/bonus/redis
+      dockerfile: Dockerfile
+    restart: on-failure
+    expose:
+      - "6379"
+
+  adminer:
+    container_name: adminer
+    env_file:
+      - .env
+    networks:
+      - inception
+    depends_on:
+      - mariadb
+    build:
+      context: ./requirements/bonus/adminer
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - "9090:9090"
+
+  ftp-server:
+    container_name: ftp-server
+    networks:
+      - inception
+    build:
+      context: ./requirements/bonus/ftp-server
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - "21:21"
+      - "20:20"
+      - "40000-40005:40000-40005"
+    volumes:
+      - wordpress:/home/wordpress:rw
+    env_file:
+      - .env
+
+  cadvisor:
+    container_name: cadvisor
+    networks:
+      - inception
+    build:
+      context: ./requirements/bonus/cadvisor
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+  website:
+    container_name: website
+    networks:
+      - inception
+    build:
+      context: ./requirements/bonus/website
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - "60:60"
+
+
 volumes:
   mariadb:
     driver: local
     driver_opts:
       type: none
       o: 'bind'
-      device: /home/yel-hadr/mariadb
+      device: /home/yel-hadr/data/mariadb
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: 'bind'
-      device: /home/yel-hadr/wordpress
+      device: /home/yel-hadr/data/wordpress
 
 networks:
   inception:

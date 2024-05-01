@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+* {
+    font-family: 'Rubik', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth ;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+    background-color: whitesmoke;
+    position: sticky;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: #333;
+}
+
+/*
+first child of header
+*/
+.logo {
+    text-decoration: none;
+    text-transform: capitalize;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #333;
+}
+.logo:hover{
+    color: #657984;
+    cursor: pointer;
+}
+/*
+second child of header
+*/
+.navbar{
+    display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 15px 10px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+.navbar li{
+    list-style: none;
+    margin: 0 12px;
+}
+
+.navbar li a{
+    position: relative;
+    color: #333;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 6px 0;
+    text-decoration: none;
+}
+
+.navbar li a::before{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: #34efdf;
+    border-radius: 12px;
+    transition: all 0.4s ease;
+}
+
+.navbar li a:hover::before{
+    width: 100%;
+    color: #657984;
+}
+
+section {
+    padding : 15% 10%;
+}
+.main {
+    width: 100%;
+    min-height: 100vh;
+    display: flexbox;
+    align-items: center;
+    
+    background: url('../images/image2.jpg') no-repeat center center/cover;
+    background-size: cover;
+    background-position: center;
+    justify-content: center;
+   
+}
+
+.main h2 {
+    color: rgb(17, 17, 17);
+    font-size: 1.8em;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgb(131, 131, 131);
+}
+.main h2 span {
+    display: inline-block;
+    margin-top: 20px;
+    color: #34efdf;
+    font-size: 3em;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px pink;
+}
+.main h3 {
+    color: rgb(0, 0, 0);
+    font-size: 2em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgb(131, 131, 131);
+}
+
+.main-btn {
+    color: white;
+    background-color: #25a79c;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: 600;
+    display: inline-block;
+    padding: 0.9em 2.1em;
+    border-radius: 15px;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    transition: all 0.7s ease;
+}
+
+.main-btn:hover {
+    background-color: #11655e;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.social-icone a{
+    color: #fff;
+    font-size: 1.8em;
+    padding-right: 10px;
+    margin-top: 20px;
+}
