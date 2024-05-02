@@ -30,6 +30,8 @@ pasv_min_port=40000
 pasv_max_port=40005
 userlist_file=/etc/vsftpd.userlist" >> /etc/vsftpd.conf
 
+# passive mode
+
 service vsftpd stop
 
 /usr/sbin/vsftpd /etc/vsftpd.conf

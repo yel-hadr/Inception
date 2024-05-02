@@ -3,7 +3,11 @@ all : up
 volume :
 	@mkdir -p /home/$(USER)/data/mariadb
 	@mkdir -p /home/$(USER)/data/wordpress
-	 
+
+delete :
+	@sudo rm -rf /home/$(USER)/data/mariadb
+	@sudo rm -rf /home/$(USER)/data/wordpress
+
 up :
 	@docker compose -f ./srcs/docker-compose.yml up -d
 
