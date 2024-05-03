@@ -25,7 +25,6 @@ env :
 	@echo "SQL_ROOT_PASSWORD=1234" >> ./srcs/.env
 	@echo "SQL_DATABASE=wordpress" >> ./srcs/.env
 	@echo "SQL_USER=youssef" >> ./srcs/.env
-	@echo "SQL_PASSWORD=1234" >> ./srcs/.env
 
 	@echo "WP_TITLE=42" >> ./srcs/.env
 	@echo "WP_ADMIN_USR=youssef" >> ./srcs/.env

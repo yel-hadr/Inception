@@ -14,6 +14,7 @@ RUN mkdir -p /var/www/wordpress && \
 	chmod 777 /var/www/wordpress
 
 COPY /conf/nginx.conf /etc/nginx/nginx.conf
+
 HEALTHCHECK --start-period=10s --timeout=10s --interval=10s --retries=3 CMD ["pidof", "nginx"]
 
 
