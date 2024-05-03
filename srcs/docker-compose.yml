@@ -25,6 +25,9 @@ services:
       - .env
     networks:
       - inception
+    secrets:
+      - db_root_password
+      - db_password
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
@@ -42,8 +45,9 @@ services:
       - inception
     depends_on:
       - mariadb
-      - redis
-      - ftp-server
+    secrets:
+      - credentials
+      - db_password
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
@@ -123,6 +127,15 @@ services:
     ports:
       - "60:60"
 
+secrets:
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+  db_password:
+    file: ../secrets/db_password.txt
+  credentials:
+    file: ../secrets/credentials.txt
+  ftp_password:
+    file: ../secrets/ftp_password.txt
 
 volumes:
   mariadb:

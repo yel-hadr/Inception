@@ -2,6 +2,12 @@
 sleep 10
 cd /var/www/wordpress
 
+WP_ADMIN_PWD=$(grep "WP_ADMIN_PWD=" /run/secrets/credentials | cut -d'=' -f2)
+WP_PWD=$(grep "WP_PWD=" /run/secrets/credentials | cut -d'=' -f2)
+
+echo "admin password: $WP_ADMIN_PWD"
+echo "password: $WP_PWD"
+
 
 echo "Starting PHP-FPM-----------"
 

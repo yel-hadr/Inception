@@ -1,6 +1,8 @@
 service vsftpd start
 
 # Add the USER, change his password and declare him as the owner of wordpress folder and all subfolders
+FTP_PASS=$(grep "FTP_PASS=" /run/secrets/ftp_password | cut -d'=' -f2)
+
 
 adduser wordpress --disabled-password
 
