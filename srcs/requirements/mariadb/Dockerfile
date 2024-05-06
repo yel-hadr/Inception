@@ -2,8 +2,7 @@ FROM debian:bookworm
 
 # Install MariaDB
 
-RUN apt update -y && \
-    apt install -y mariadb-server
+RUN apt-get clean && apt-get update -m -y && apt-get install -y mariadb-server
 
 # Copy the script that will create the database and the user
 COPY conf/script.sh /etc/script.sh

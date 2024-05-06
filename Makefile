@@ -37,6 +37,7 @@ env :
 	@echo "WP_DBHOST=mariadb:3306" >> ./srcs/.env
 	@echo "CERTS_=/etc/ssl/certs/nginx-selfsigned.crt" >> ./srcs/.env
 	@echo "KEYS_=/etc/ssl/private/nginx-selfsigned.key" >> ./srcs/.env
+	@mkdir -p ./secrets
 	@echo "WP_PWD=1234" > ./secrets/credentials.txt
 	@echo "WP_ADMIN_PWD=1234" >> ./secrets/credentials.txt
 	@echo "SQL_ROOT_PASSWORD=1234" > ./secrets/db_root_password.txt

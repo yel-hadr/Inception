@@ -1,6 +1,6 @@
 FROM debian:bookworm
 
-RUN apt update -y && apt install -y vsftpd
+RUN apt-get clean && apt-get update -m -y &&  apt-get install -y vsftpd
 
 COPY  conf/script.sh /etc/script.sh
 RUN chmod +x /etc/script.sh
