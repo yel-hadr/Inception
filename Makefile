@@ -7,7 +7,7 @@ volume :
 	@mkdir -p /home/$(USER)/data/wordpress
 
 up :
-	@docker compose -f ./srcs/docker-compose.yml up --build
+	@docker compose -f ./srcs/docker-compose.yml up --build -d
 
 down : 
 	@docker compose -f ./srcs/docker-compose.yml down -v
