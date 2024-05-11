@@ -1,8 +1,7 @@
-FROM debian:bookworm
+FROM debian:buster
 
-RUN apt update
-
-RUN apt install -y apache2 php libapache2-mod-php adminer -y
+RUN apt update && \
+    apt install -y apache2 php libapache2-mod-php adminer -y
 
 RUN cd /usr/share/adminer/ && \
     ./compile.php && \
