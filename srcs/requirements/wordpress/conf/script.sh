@@ -1,48 +1,33 @@
 #!/bin/bash
-sleep 10
 cd /var/www/wordpress
 
 WP_ADMIN_PWD=$(grep "WP_ADMIN_PWD=" /run/secrets/credentials | cut -d'=' -f2)
 WP_PWD=$(grep "WP_PWD=" /run/secrets/credentials | cut -d'=' -f2)
-
-echo "admin password: $WP_ADMIN_PWD"
-echo "password: $WP_PWD"
+SQL_PASSWORD=$(grep "SQL_PASSWORD=" /run/secrets/db_password | cut -d'=' -f2)
 
 
 echo "Starting PHP-FPM-----------"
+
+
+echo "############# checking if wp-config.php exists ###############"
+
 
 if [ -f /var/www/wordpress/wp-config.php ]; then
 	echo "File exists"
 else
 	echo "File does not exist"
 	wp core download --allow-root
-fi
-chown -R root:root /var/www/wordpress
+	# chown -R root:root /var/www/wordpress
 
-echo "wp core install and create config file -----"
-wp core install --url=$DOMAIN_NAME/ --title=$WP_TITLE --admin_user=$WP_ADMIN_USR --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root
-
-echo "############# checking if wp-config.php exists ###############"
-if [ -f /var/www/wordpress/wp-config.php ]; then
-	echo "File exists"
-else
-	echo "File does not exist"
+	echo "wp core install and create config file -----"
 	wp config create --dbname="$SQL_DATABASE" --dbuser="$SQL_USER" --dbpass="$SQL_PASSWORD" --dbhost="$WP_DBHOST" --allow-root
 
 fi
 echo "############# wp-config.php created ###############"
+wp core install --url=$DOMAIN_NAME/ --title=$WP_TITLE --admin_user=$WP_ADMIN_USR --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root
 
-
-echo "############# checking if user exists ###############"
-wp user list --allow-root --path=/var/www/wordpress --field=user_login | grep -q ${WP_USR}
-if [ $? != 0 ]; then
-	wp user create $WP_USR $WP_EMAIL --role=author --user_pass=$WP_PWD --allow-root
-fi
+wp user create $WP_USR $WP_EMAIL --role=author --user_pass=$WP_PWD --allow-root
 echo "############# user created ###############"
-
-wp option update uploads_use_yearmonth_folders 0 --allow-root
-wp option update upload_path wp-content/uploads --allow-root
-wp core verify-checksums --allow-root
 
 echo "############# checking if theme exists ###############"
 wp theme list --allow-root --path=/var/www/wordpress | grep -q astra

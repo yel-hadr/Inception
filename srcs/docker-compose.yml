@@ -1,6 +1,5 @@
 version: '3.8'
 
-
 services:
   nginx:
     container_name: nginx
@@ -28,6 +27,11 @@ services:
     secrets:
       - db_root_password
       - db_password
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 20s
+      timeout: 10s
+      retries: 10
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile

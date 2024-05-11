@@ -3,8 +3,6 @@
 SQL_ROOT_PASSWORD=$(grep "SQL_ROOT_PASSWORD=" /run/secrets/db_root_password | cut -d'=' -f2)
 SQL_PASSWORD=$(grep "SQL_PASSWORD=" /run/secrets/db_password | cut -d'=' -f2)
 
-echo "root password: $SQL_ROOT_PASSWORD"
-echo "password: $SQL_PASSWORD"
 
 # Adjust MariaDB configuration (optional)
 sed -i "s|bind-address           = 127.0.0.1|bind-address           = 0.0.0.0|g" /etc/mysql/mariadb.conf.d/50-server.cnf
