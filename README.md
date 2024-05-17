@@ -27,18 +27,60 @@ Welcome to the documentation of my project! This document is a System Administra
 7. **cAdvisor**
    - Description: Container hosting cAdvisor to monitor Docker container resource usage.
 
-## Docker Compose
 
-The aforementioned seven containers are interconnected using Docker Compose. This tool provides a simplified method to configure and manage all the containers as a single service, allowing for easy orchestration of multi-container Docker applications.
+8. **Adminer**
+    - This container runs Adminer, a database management tool accessible via port 9090, providing a user-friendly interface to manage MariaDB.
 
-## Installation
 
-[Provide instructions on how to install and set up your project. Include any dependencies and their installation commands.]
+## Docker and Docker Compose
+
+### Docker
+
+Docker is a platform that uses OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their own software, libraries, and configuration files; they can communicate with each other through well-defined channels. All containers are run by a single operating system kernel and therefore use fewer resources than virtual machines.
+
+### Docker Compose
+
+Docker Compose is a tool that was developed to help define and share multi-container applications. With Compose, you can create a YAML file to define the services and with a single command, you can spin up everything. Docker Compose provides a simple way to orchestrate the use of multiple containers, ensuring they can communicate with each other and manage dependencies.
+
+## Getting Started
+
+### Prerequisites
+
+- Docker
+- Docker Compose
+
+### Installation
+
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/yel-hadr/Inception.git
+    cd Inception/srcs
+    ```
+
+2. Ensure Docker and Docker Compose are installed on your system.
+
+3. Build and start the containers using Docker Compose:
+    ```bash
+    mkdir ./data
+    mkdir ./data/wordpress ./data/mariadb
+    docker-compose up --build
+    ```
 
 ## Usage
 
-[Explain how to use your project. Provide examples or code snippets if necessary.]
+After starting the Docker Compose setup, you can interact with the services as follows:
 
-## Contributing
+- **WordPress**: Set up your WordPress site by navigating to `https://localhost:443`.
+- **MariaDB**: Used as the database for WordPress.
+- **Redis**: Automatically integrates with WordPress for caching.
+- **FTP Server**: Connect using an FTP client with the command `ftp -p DOCKER_IP 21` to manage WordPress files.
+- **Static Website**: View the static website by navigating to `http://localhost:60`.
+- **cAdvisor**: Monitor your Docker containers via the cAdvisor interface at `http://localhost:8080`.
+- **Adminer**: Manage your MariaDB databases through Adminer by navigating to `http://localhost:9090`.
 
-[Explain how others can contribute to your project. Include guidelines for pull requests, code formatting, and any other relevant information.]
+## Conclusion
+
+This project demonstrates the effective use of Docker and Docker Compose to manage a multi-container environment, integrating various services required for a full-fledged web application. Each container serves a distinct purpose and works together seamlessly, showcasing the power of containerization in system administration.
+
+For further details or troubleshooting, please refer to the respective Docker and Docker Compose documentation.
+
