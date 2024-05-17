@@ -149,13 +149,13 @@ volumes:
     driver_opts:
       type: none
       o: 'bind'
-      device: /home/yel-hadr/data/mariadb
+      device: ./data/mariadb
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: 'bind'
-      device: /home/yel-hadr/data/wordpress
+      device: ./data/wordpress
 
 networks:
   inception:
